@@ -1,0 +1,14 @@
+package com.github.scoring;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class GithubRepositoryScoringApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(GithubRepositoryScoringApplication.class, args);
+        System.out.println("Hello world");
+    }
+
+}
