@@ -1,6 +1,8 @@
 package com.github.scoring.service;
 
 import com.github.scoring.client.GithubApiClient;
+import com.github.scoring.dto.GithubSearchResponse;
+import com.github.scoring.dto.PageResponse;
 import com.github.scoring.dto.ScoredRepositoryDto;
 import org.springframework.stereotype.Service;
 
@@ -22,16 +24,36 @@ public class GithubSearchService {
         this.scoreService = scoreService;
     }
 
-    public List<ScoredRepositoryDto> searchAndScore(
+    public PageResponse<ScoredRepositoryDto> searchAndScore(
             String query,
             String language,
-            LocalDate createdAfter
+            LocalDate createdAfter,
+            int page,
+            int size
     ) {
-        return githubApiClient.search(query, language, createdAfter)
+        // Fetch from GitHub with pagination
+        GithubSearchResponse searchResponse = githubApiClient.search(
+                query,
+                language,
+                createdAfter,
+                page,
+                size
+        );
+
+        // Score and sort the items from this page
+        List<ScoredRepositoryDto> scoredRepositories = searchResponse.items()
                 .stream()
                 .map(scoreService::score)
                 .sorted(Comparator.comparingDouble(
                         ScoredRepositoryDto::popularityScore).reversed())
                 .toList();
+
+        // Build paginated response
+        return new PageResponse<>(
+                scoredRepositories,
+                page,
+                size,
+                searchResponse.totalCount()
+        );
     }
 }

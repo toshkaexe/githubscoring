@@ -1,6 +1,7 @@
 package com.github.scoring.client;
 
 import com.github.scoring.dto.GithubRepository;
+import com.github.scoring.dto.GithubSearchResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -23,7 +24,7 @@ public class GithubApiClient {
                 .build();
     }
 
-    public List<GithubRepository> search(String query, String language, LocalDate createdAfter) {
+    public GithubSearchResponse search(String query, String language, LocalDate createdAfter, int page, int size) {
         StringBuilder searchQuery = new StringBuilder(query);
 
         if (language != null && !language.isBlank()) {
@@ -40,21 +41,34 @@ public class GithubApiClient {
                         .queryParam("q", searchQuery.toString())
                         .queryParam("sort", "stars")
                         .queryParam("order", "desc")
-                        .queryParam("per_page", 30)
+                        .queryParam("page", page)
+                        .queryParam("per_page", size)
                         .build())
                 .retrieve()
                 .bodyToMono(Map.class)
                 .block();
 
         if (response == null || !response.containsKey("items")) {
-            return List.of();
+            return new GithubSearchResponse(0, List.of());
+        }
+
+        // Extract total_count
+        long totalCount = 0;
+        if (response.containsKey("total_count")) {
+            Object totalCountObj = response.get("total_count");
+            if (totalCountObj instanceof Integer) {
+                totalCount = ((Integer) totalCountObj).longValue();
+            } else if (totalCountObj instanceof Long) {
+                totalCount = (Long) totalCountObj;
+            }
         }
 
         List<Map<String, Object>> items = (List<Map<String, Object>>) response.get("items");
-
-        return items.stream()
+        List<GithubRepository> repositories = items.stream()
                 .map(this::mapToGithubRepository)
                 .toList();
+
+        return new GithubSearchResponse(totalCount, repositories);
     }
 
     private GithubRepository mapToGithubRepository(Map<String, Object> item) {
