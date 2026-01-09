@@ -32,7 +32,6 @@ public class SearchService {
             int page,
             int size
     ) {
-
         validateName(name);
 
         GithubSearchResponse searchResponse = githubApiClient.search(
@@ -68,7 +67,6 @@ public class SearchService {
     }
 
     private void validateName(String name) {
-
         if (name == null || name.isBlank()) {
             throw new GithubValidationException("Validation failed or endpoint has been spammed: Query cannot be empty");
         }
