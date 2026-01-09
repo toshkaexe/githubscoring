@@ -53,15 +53,15 @@ public class GithubApiClient {
                 .build();
     }
 
-    public GithubSearchResponse search(String query, String language, LocalDate createdAfter, String sort, String order, int page, int size) {
+    public GithubSearchResponse search(String query, String language, LocalDate createAt, String sort, String order, int page, int size) {
         StringBuilder searchQuery = new StringBuilder(query);
 
         if (language != null && !language.isBlank()) {
             searchQuery.append(LANGUAGE_FILTER).append(language);
         }
 
-        if (createdAfter != null) {
-            searchQuery.append(CREATED_FILTER).append(createdAfter.format(DateTimeFormatter.ISO_DATE));
+        if (createAt != null) {
+            searchQuery.append(CREATED_FILTER).append(createAt.format(DateTimeFormatter.ISO_DATE));
         }
 
         Map<String, Object> response = webClient.get()

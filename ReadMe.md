@@ -110,7 +110,7 @@ http://localhost:8080/api/repositories/score?query=tetris&language=Assembly
 
 **URL:**
 ```
-http://localhost:8080/api/repositories/score?query=react&createdAfter=2023-01-01
+http://localhost:8080/api/repositories/score?query=react&createAt=2023-01-01
 ```
 
 **Description:** Searches for React repositories created after January 1, 2023.
@@ -167,7 +167,7 @@ http://localhost:8080/api/repositories/score?query=django&page=2&size=50
 
 **URL:**
 ```
-http://localhost:8080/api/repositories/score?query=tetris&language=Assembly&createdAfter=2015-01-01&sort=stars&order=desc&page=1&size=30
+http://localhost:8080/api/repositories/score?query=tetris&language=Assembly&createAt=2015-01-01&sort=stars&order=desc&page=1&size=30
 ```
 
 **Description:** Complex query using all available parameters.
@@ -231,7 +231,7 @@ http://localhost:8080/api/repositories/score?query=tetris&language=Assembly&crea
 | Parameter | Type | Default Value | Description |
 |----------|-----|----------------------|----------|
 | `language` | String | - | Filter by programming language |
-| `createdAfter` | LocalDate (YYYY-MM-DD) | - | Filter by creation date |
+| `createAt` | LocalDate (YYYY-MM-DD) | - | Filter by creation date |
 | `sort` | String | - | Sort by: `stars`, `forks`, `help-wanted-issues`, `updated` |
 | `order` | String | `desc` | Order: `desc` (descending), `asc` (ascending) |
 | `page` | Integer | 1 | Page number (minimum: 1) |
@@ -278,29 +278,3 @@ src/
 └── test/
     └── java/com/github/scoring/
 ```
-
-## Configuration
-
-### application.properties
-
-```properties
-# GitHub API base URL (optional)
-github.api.url=https://api.github.com
-
-# GitHub API Accept header (optional)
-github.api.accept=application/vnd.github+json
-```
-
-## Frequently Asked Questions
-
-**Q: How many results can I get in one request?**
-A: Maximum 100 repositories per request (`size` parameter). Default is 30.
-
-**Q: Can I combine filters?**
-A: Yes, all filters (`language`, `createdAfter`, `sort`, `order`) can be combined.
-
-**Q: What does a `recencyScore` close to 0 mean?**
-A: It means the repository hasn't been updated in a very long time (several years).
-
-**Q: How does the `sort` parameter work?**
-A: The `sort` parameter is passed to the GitHub API and affects the order of results BEFORE calculating `popularityScore`. After receiving results, they are additionally sorted by `popularityScore`.

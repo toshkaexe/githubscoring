@@ -21,7 +21,7 @@ public class GithubSearchService {
     public PageResponse<ScoredRepositoryDto> searchAndScore(
             String query,
             String language,
-            LocalDate createdAfter,
+            LocalDate createAt,
             String sort,
             String order,
             int page,
@@ -31,7 +31,7 @@ public class GithubSearchService {
         GithubSearchResponse searchResponse = githubApiClient.search(
                 query,
                 language,
-                createdAfter,
+                createAt,
                 sort,
                 order,
                 page,
