@@ -1,6 +1,7 @@
 package com.github.scoring.service;
 
 import com.github.scoring.client.GithubApiClient;
+import com.github.scoring.exception.GithubValidationException;
 import com.github.scoring.model.GithubSearchResponse;
 import com.github.scoring.model.PageResponse;
 import com.github.scoring.model.ScoredModel;
@@ -10,10 +11,14 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
 public class SearchService {
+
+    // Pattern to validate search query - allows alphanumeric, spaces, hyphens, underscores, dots, and GitHub search operators
+    private static final Pattern INVALID_QUERY_PATTERN = Pattern.compile("[<>@#$%^&*(){}\\[\\]|\\\\]");
 
     private final GithubApiClient githubApiClient;
     private final PopularityScoreService scoreService;
@@ -27,7 +32,9 @@ public class SearchService {
             int page,
             int size
     ) {
-        // Fetch from GitHub with pagination
+
+        validateName(name);
+
         GithubSearchResponse searchResponse = githubApiClient.search(
                 name,
                 language,
@@ -58,5 +65,20 @@ public class SearchService {
                 size,
                 searchResponse.totalCount()
         );
+    }
+
+    private void validateName(String name) {
+
+        if (name == null || name.isBlank()) {
+            throw new GithubValidationException("Validation failed or endpoint has been spammed: Query cannot be empty");
+        }
+
+        if (INVALID_QUERY_PATTERN.matcher(name).find()) {
+            throw new GithubValidationException("Validation failed or endpoint has been spammed: Query contains invalid characters");
+        }
+
+        if (name.length() > 256) {
+            throw new GithubValidationException("Validation failed or endpoint has been spammed: Query is too long");
+        }
     }
 }
