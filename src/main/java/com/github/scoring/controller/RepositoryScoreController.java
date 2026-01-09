@@ -32,14 +32,16 @@ public class RepositoryScoreController {
             @RequestParam(required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDate createdAfter,
+            @RequestParam(required = false) String sort,
+            @RequestParam(required = false) String order,
             @RequestParam(defaultValue = "1")
             @Min(value = 1, message = "page must be greater than or equal to 1")
             int page,
-            @RequestParam(defaultValue = "10")
+            @RequestParam(defaultValue = "30")
             @Min(value = 1, message = "size must be greater than or equal to 1")
             @Max(value = 100, message = "size must not exceed 100")
             int size
     ) {
-        return githubSearchService.searchAndScore(query, language, createdAfter, page, size);
+        return githubSearchService.searchAndScore(query, language, createdAfter, sort, order, page, size);
     }
 }
