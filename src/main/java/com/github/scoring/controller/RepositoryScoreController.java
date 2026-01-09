@@ -35,7 +35,7 @@ public class RepositoryScoreController {
             @RequestParam(defaultValue = "1")
             @Min(value = 1, message = "page must be greater than or equal to 1")
             int page,
-            @RequestParam(defaultValue = "30")
+            @RequestParam(defaultValue = "10")
             @Min(value = 1, message = "size must be greater than or equal to 1")
             @Max(value = 100, message = "size must not exceed 100")
             int size

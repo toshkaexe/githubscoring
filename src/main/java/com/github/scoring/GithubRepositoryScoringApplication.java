@@ -8,7 +8,6 @@ public class GithubRepositoryScoringApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(GithubRepositoryScoringApplication.class, args);
-        System.out.println("Hello world");
     }
 
 }
