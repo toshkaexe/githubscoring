@@ -146,6 +146,8 @@ http://localhost:8080/api/repositories/score?query=tensorflow&sort=forks&order=d
 http://localhost:8080/api/repositories/score?query=vue&sort=updated&order=desc
 ```
 
+**Description:** Searches for Vue repositories sorted by last update date. The `updated` sort parameter orders results by the most recently updated repositories first (when using `order=desc`), helping you find actively maintained projects.
+
 ---
 
 #### 7. Search with Pagination
