@@ -2,6 +2,9 @@ package com.github.scoring.client;
 
 import com.github.scoring.dto.GithubRepository;
 import com.github.scoring.dto.GithubSearchResponse;
+import com.github.scoring.exception.GithubApiException;
+import com.github.scoring.exception.GithubServiceUnavailableException;
+import com.github.scoring.exception.GithubValidationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -84,6 +87,24 @@ public class GithubApiClient {
                             .build();
                 })
                 .retrieve()
+                .onStatus(
+                        status -> status.value() == 304,
+                        response304 -> response304.createException().map(ex ->
+                                new GithubApiException("GitHub API returned 304 Not Modified", 304, ex)
+                        )
+                )
+                .onStatus(
+                        status -> status.value() == 422,
+                        response422 -> response422.bodyToMono(String.class).map(body ->
+                                new GithubValidationException("Validation failed or endpoint has been spammed: " + body)
+                        )
+                )
+                .onStatus(
+                        status -> status.value() == 503,
+                        response503 -> response503.bodyToMono(String.class).map(body ->
+                                new GithubServiceUnavailableException("GitHub API service unavailable: " + body)
+                        )
+                )
                 .bodyToMono(Map.class)
                 .block();
 

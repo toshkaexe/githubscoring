@@ -38,13 +38,18 @@ public class GithubSearchService {
                 size
         );
 
-        // Score and sort the items from this page
-        List<ScoredRepositoryDto> scoredRepositories = searchResponse.items()
+        // Score the items from this page
+        var stream = searchResponse.items()
                 .stream()
-                .map(scoreService::score)
-                .sorted(Comparator.comparingDouble(
-                        ScoredRepositoryDto::popularityScore).reversed())
-                .toList();
+                .map(scoreService::score);
+
+        // Only sort by popularityScore if user didn't specify sort parameter
+        if (sort == null || sort.isBlank()) {
+            stream = stream.sorted(Comparator.comparingDouble(
+                    ScoredRepositoryDto::popularityScore).reversed());
+        }
+
+        List<ScoredRepositoryDto> scoredRepositories = stream.toList();
 
         // Build paginated response
         return new PageResponse<>(
