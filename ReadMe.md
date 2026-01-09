@@ -86,7 +86,7 @@ The application provides the following endpoints:
 
 | Key | Value | Description |
 |-----|-------|-------------|
-| `query` | `spring` | Required: Search term |
+| `name` | `spring` | Required: Search term |
 | `language` | `Java` | Optional: Filter by language |
 | `createAt` | `2023-01-01` | Optional: Filter by creation date |
 | `sort` | `stars` | Optional: Sort criteria |
@@ -97,7 +97,7 @@ The application provides the following endpoints:
 **Option B: Direct URL Entry**
 Alternatively, paste the complete URL with parameters:
 ```
-http://localhost:8080/api/repositories/score?query=spring&language=Java&sort=stars&order=desc
+http://localhost:8080/api/repositories/score?name=tetris&language=Java&sort=stars&order=desc
 ```
 
 #### 4. Set Headers (Optional but Recommended)
@@ -153,9 +153,9 @@ This ensures you receive JSON formatted responses.
 - ✅ Make sure your Spring Boot app is running: `./mvnw spring-boot:run`
 - ✅ Check the port is correct (default: 8080)
 
-❌ **Error: "Required request parameter 'query' is not present"**
-- ✅ Add the `query` parameter in the Params tab
-- ✅ The `query` parameter is mandatory
+❌ **Error: "Required request parameter 'name' is not present"**
+- ✅ Add the `name` parameter in the Params tab
+- ✅ The `name` parameter is mandatory
 
 ❌ **Empty results**
 - ✅ Try a more common search term (e.g., "react", "spring", "java")
@@ -163,11 +163,11 @@ This ensures you receive JSON formatted responses.
 
 ### Postman Request Examples
 
-#### 1. Basic Search (query only)
+#### 1. Basic Search (name only)
 
 **URL:**
 ```
-http://localhost:8080/api/repositories/score?query=spring
+http://localhost:8080/api/repositories/score?name=tetris
 ```
 
 **Headers:**
@@ -185,7 +185,7 @@ Accept: application/json
 
 **URL:**
 ```
-http://localhost:8080/api/repositories/score?query=tetris&language=Assembly
+http://localhost:8080/api/repositories/score?name=tetris&language=Assembly
 ```
 
 **Description:** Searches for Tetris repositories written in Assembly.
@@ -196,7 +196,7 @@ http://localhost:8080/api/repositories/score?query=tetris&language=Assembly
 
 **URL:**
 ```
-http://localhost:8080/api/repositories/score?query=react&createAt=2023-01-01
+http://localhost:8080/api/repositories/score?name=react&createAt=2023-01-01
 ```
 
 **Description:** Searches for React repositories created after January 1, 2023.
@@ -207,7 +207,7 @@ http://localhost:8080/api/repositories/score?query=react&createAt=2023-01-01
 
 **URL:**
 ```
-http://localhost:8080/api/repositories/score?query=kubernetes&sort=stars&order=desc
+http://localhost:8080/api/repositories/score?name=kubernetes&sort=stars&order=desc
 ```
 
 **Sorting parameters:**
@@ -220,7 +220,7 @@ http://localhost:8080/api/repositories/score?query=kubernetes&sort=stars&order=d
 
 **URL:**
 ```
-http://localhost:8080/api/repositories/score?query=tensorflow&sort=forks&order=desc
+http://localhost:8080/api/repositories/score?name=tensorflow&sort=forks&order=desc
 ```
 
 ---
@@ -229,7 +229,7 @@ http://localhost:8080/api/repositories/score?query=tensorflow&sort=forks&order=d
 
 **URL:**
 ```
-http://localhost:8080/api/repositories/score?query=vue&sort=updated&order=desc
+http://localhost:8080/api/repositories/score?name=vue&sort=updated&order=desc
 ```
 
 **Description:** Searches for Vue repositories sorted by last update date. The `updated` sort parameter orders results by the most recently updated repositories first (when using `order=desc`), helping you find actively maintained projects.
@@ -240,7 +240,7 @@ http://localhost:8080/api/repositories/score?query=vue&sort=updated&order=desc
 
 **URL:**
 ```
-http://localhost:8080/api/repositories/score?query=django&page=2&size=50
+http://localhost:8080/api/repositories/score?name=django&page=2&size=50
 ```
 
 **Pagination parameters:**
@@ -253,7 +253,7 @@ http://localhost:8080/api/repositories/score?query=django&page=2&size=50
 
 **URL:**
 ```
-http://localhost:8080/api/repositories/score?query=tetris&language=Assembly&createAt=2015-01-01&sort=stars&order=desc&page=1&size=30
+http://localhost:8080/api/repositories/score?name=tetris&language=Assembly&createAt=2015-01-01&sort=stars&order=desc&page=1&size=30
 ```
 
 **Description:** Complex query using all available parameters.
@@ -310,7 +310,7 @@ http://localhost:8080/api/repositories/score?query=tetris&language=Assembly&crea
 
 | Parameter | Type | Description |
 |----------|-----|----------|
-| `query` | String | Search query (required) |
+| `name` | String | Repository name search term (required) |
 
 ### Optional Parameters
 

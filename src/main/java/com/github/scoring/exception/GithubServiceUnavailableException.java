@@ -8,7 +8,4 @@ public class GithubServiceUnavailableException extends GithubApiException {
         super(message, 503);
     }
 
-    public GithubServiceUnavailableException(String message, Throwable cause) {
-        super(message, 503, cause);
-    }
 }

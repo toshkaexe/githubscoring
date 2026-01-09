@@ -19,7 +19,7 @@ public class GithubSearchService {
     private final PopularityScoreService scoreService;
 
     public PageResponse<ScoredRepositoryDto> searchAndScore(
-            String query,
+            String name,
             String language,
             LocalDate createAt,
             String sort,
@@ -29,7 +29,7 @@ public class GithubSearchService {
     ) {
         // Fetch from GitHub with pagination
         GithubSearchResponse searchResponse = githubApiClient.search(
-                query,
+                name,
                 language,
                 createAt,
                 sort,

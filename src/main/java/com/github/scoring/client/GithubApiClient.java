@@ -56,8 +56,8 @@ public class GithubApiClient {
                 .build();
     }
 
-    public GithubSearchResponse search(String query, String language, LocalDate createAt, String sort, String order, int page, int size) {
-        StringBuilder searchQuery = new StringBuilder(query);
+    public GithubSearchResponse search(String name, String language, LocalDate createAt, String sort, String order, int page, int size) {
+        StringBuilder searchQuery = new StringBuilder(name);
 
         if (language != null && !language.isBlank()) {
             searchQuery.append(LANGUAGE_FILTER).append(language);

@@ -33,16 +33,6 @@ public class GlobalExceptionHandler {
                 ));
     }
 
-    @ExceptionHandler(GithubApiException.class)
-    public ResponseEntity<Map<String, Object>> handleGithubApiException(GithubApiException ex) {
-        return ResponseEntity
-                .status(ex.getStatusCode())
-                .body(createErrorResponse(
-                        ex.getStatusCode(),
-                        "GitHub API Error",
-                        ex.getMessage()
-                ));
-    }
 
     private Map<String, Object> createErrorResponse(int status, String error, String message) {
         return Map.of(

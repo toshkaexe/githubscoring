@@ -8,7 +8,4 @@ public class GithubValidationException extends GithubApiException {
         super(message, 422);
     }
 
-    public GithubValidationException(String message, Throwable cause) {
-        super(message, 422, cause);
-    }
 }

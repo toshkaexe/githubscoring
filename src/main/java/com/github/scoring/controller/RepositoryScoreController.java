@@ -27,7 +27,7 @@ public class RepositoryScoreController {
 
     @GetMapping("/score")
     public PageResponse<ScoredRepositoryDto> scoreRepositories(
-            @RequestParam String query,
+            @RequestParam String name,
             @RequestParam(required = false) String language,
             @RequestParam(required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -42,6 +42,6 @@ public class RepositoryScoreController {
             @Max(value = 100, message = "size must not exceed 100")
             int size
     ) {
-        return githubSearchService.searchAndScore(query, language, createAt, sort, order, page, size);
+        return githubSearchService.searchAndScore(name, language, createAt, sort, order, page, size);
     }
 }
