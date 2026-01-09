@@ -1,7 +1,7 @@
 package com.github.scoring.service;
 
-import com.github.scoring.dto.GithubRepository;
-import com.github.scoring.dto.ScoredRepositoryDto;
+import com.github.scoring.model.GithubModel;
+import com.github.scoring.model.ScoredModel;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
@@ -32,22 +32,22 @@ class PopularityScoreServiceTest {
         Instant recent = Instant.now().minus(10, ChronoUnit.DAYS);
         Instant old = Instant.now().minus(300, ChronoUnit.DAYS);
 
-        GithubRepository recentRepo = new GithubRepository(
+        GithubModel recentRepo = new GithubModel(
                 "owner/recent-repo",
                 100,
                 50,
                 recent
         );
 
-        GithubRepository oldRepo = new GithubRepository(
+        GithubModel oldRepo = new GithubModel(
                 "owner/old-repo",
                 100,
                 50,
                 old
         );
 
-        ScoredRepositoryDto recentScored = service.score(recentRepo);
-        ScoredRepositoryDto oldScored = service.score(oldRepo);
+        ScoredModel recentScored = service.score(recentRepo);
+        ScoredModel oldScored = service.score(oldRepo);
 
         assertThat(recentScored.popularityScore())
                 .isGreaterThan(oldScored.popularityScore());
@@ -56,14 +56,13 @@ class PopularityScoreServiceTest {
     @Test
     void scoreCalculatesCorrectValues() {
         Instant pushedAt = Instant.now().minus(30, ChronoUnit.DAYS);
-        GithubRepository repo = new GithubRepository(
+        GithubModel repo = new GithubModel(
                 "owner/test-repo",
                 100,
                 50,
                 pushedAt
         );
-
-        ScoredRepositoryDto scored = service.score(repo);
+        ScoredModel scored = service.score(repo);
 
         assertThat(scored.fullName()).isEqualTo("owner/test-repo");
         assertThat(scored.stars()).isEqualTo(100);
@@ -77,22 +76,22 @@ class PopularityScoreServiceTest {
     void repositoryWithMoreStarsHasHigherPopularityScore() {
         Instant pushedAt = Instant.now().minus(30, ChronoUnit.DAYS);
 
-        GithubRepository repoWithMoreStars = new GithubRepository(
+        GithubModel repoWithMoreStars = new GithubModel(
                 "owner/popular-repo",
                 1000,
                 50,
                 pushedAt
         );
 
-        GithubRepository repoWithFewerStars = new GithubRepository(
+        GithubModel repoWithFewerStars = new GithubModel(
                 "owner/less-popular-repo",
                 100,
                 50,
                 pushedAt
         );
 
-        ScoredRepositoryDto moreStarsScored = service.score(repoWithMoreStars);
-        ScoredRepositoryDto fewerStarsScored = service.score(repoWithFewerStars);
+        ScoredModel moreStarsScored = service.score(repoWithMoreStars);
+        ScoredModel fewerStarsScored = service.score(repoWithFewerStars);
 
         assertThat(moreStarsScored.popularityScore())
                 .isGreaterThan(fewerStarsScored.popularityScore());

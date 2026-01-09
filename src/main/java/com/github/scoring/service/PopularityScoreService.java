@@ -1,7 +1,7 @@
 package com.github.scoring.service;
 
-import com.github.scoring.dto.GithubRepository;
-import com.github.scoring.dto.ScoredRepositoryDto;
+import com.github.scoring.model.GithubModel;
+import com.github.scoring.model.ScoredModel;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -10,14 +10,14 @@ import java.time.temporal.ChronoUnit;
 @Service
 public class PopularityScoreService {
 
-    public ScoredRepositoryDto score(GithubRepository repo) {
+    public ScoredModel score(GithubModel repo) {
         double recency = calculateRecency(repo.pushedAt());
         double popularity =
                 0.5 * Math.log(repo.stars() + 1)
               + 0.3 * Math.log(repo.forks() + 1)
               + 0.2 * recency;
 
-        return new ScoredRepositoryDto(
+        return new ScoredModel(
                 repo.fullName(),
                 repo.stars(),
                 repo.forks(),

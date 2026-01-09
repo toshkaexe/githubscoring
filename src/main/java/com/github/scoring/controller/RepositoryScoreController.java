@@ -1,8 +1,8 @@
 package com.github.scoring.controller;
 
-import com.github.scoring.dto.PageResponse;
-import com.github.scoring.dto.ScoredRepositoryDto;
-import com.github.scoring.service.GithubSearchService;
+import com.github.scoring.model.PageResponse;
+import com.github.scoring.model.ScoredModel;
+import com.github.scoring.service.SearchService;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,14 +19,14 @@ import java.time.LocalDate;
 @Validated
 public class RepositoryScoreController {
 
-    private final GithubSearchService githubSearchService;
+    private final SearchService searchService;
 
-    public RepositoryScoreController(GithubSearchService githubSearchService) {
-        this.githubSearchService = githubSearchService;
+    public RepositoryScoreController(SearchService searchService) {
+        this.searchService = searchService;
     }
 
     @GetMapping("/score")
-    public PageResponse<ScoredRepositoryDto> scoreRepositories(
+    public PageResponse<ScoredModel> scoreRepositories(
             @RequestParam String name,
             @RequestParam(required = false) String language,
             @RequestParam(required = false)
@@ -42,6 +42,6 @@ public class RepositoryScoreController {
             @Max(value = 100, message = "size must not exceed 100")
             int size
     ) {
-        return githubSearchService.searchAndScore(name, language, createAt, sort, order, page, size);
+        return searchService.searchAndScore(name, language, createAt, sort, order, page, size);
     }
 }

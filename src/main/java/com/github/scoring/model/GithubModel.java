@@ -1,8 +1,8 @@
-package com.github.scoring.dto;
+package com.github.scoring.model;
 
 import java.time.Instant;
 
-public record GithubRepository(
+public record GithubModel(
     String fullName,
     int stars,
     int forks,

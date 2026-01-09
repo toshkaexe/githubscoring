@@ -1,8 +1,8 @@
-package com.github.scoring.dto;
+package com.github.scoring.model;
 
 import java.util.List;
 
 public record GithubSearchResponse(
     long totalCount,
-    List<GithubRepository> items
+    List<GithubModel> items
 ) {}

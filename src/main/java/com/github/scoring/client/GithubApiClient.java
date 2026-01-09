@@ -1,7 +1,7 @@
 package com.github.scoring.client;
 
-import com.github.scoring.dto.GithubRepository;
-import com.github.scoring.dto.GithubSearchResponse;
+import com.github.scoring.model.GithubModel;
+import com.github.scoring.model.GithubSearchResponse;
 import com.github.scoring.exception.GithubApiException;
 import com.github.scoring.exception.GithubServiceUnavailableException;
 import com.github.scoring.exception.GithubValidationException;
@@ -124,14 +124,14 @@ public class GithubApiClient {
         }
 
         List<Map<String, Object>> items = (List<Map<String, Object>>) response.get(ITEMS_FIELD);
-        List<GithubRepository> repositories = items.stream()
+        List<GithubModel> repositories = items.stream()
                 .map(this::mapToGithubRepository)
                 .toList();
 
         return new GithubSearchResponse(totalCount, repositories);
     }
 
-    private GithubRepository mapToGithubRepository(Map<String, Object> item) {
+    private GithubModel mapToGithubRepository(Map<String, Object> item) {
         String fullName = (String) item.get(FULL_NAME_FIELD);
         Integer stars = (Integer) item.get(STARGAZERS_COUNT_FIELD);
         Integer forks = (Integer) item.get(FORKS_COUNT_FIELD);
@@ -139,7 +139,7 @@ public class GithubApiClient {
 
         Instant pushedAt = pushedAtStr != null ? Instant.parse(pushedAtStr) : null;
 
-        return new GithubRepository(
+        return new GithubModel(
                 fullName,
                 stars != null ? stars : 0,
                 forks != null ? forks : 0,

@@ -1,4 +1,4 @@
-package com.github.scoring.dto;
+package com.github.scoring.model;
 
 import java.util.List;
 

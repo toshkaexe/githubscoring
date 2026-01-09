@@ -1,9 +1,9 @@
 package com.github.scoring.service;
 
 import com.github.scoring.client.GithubApiClient;
-import com.github.scoring.dto.GithubSearchResponse;
-import com.github.scoring.dto.PageResponse;
-import com.github.scoring.dto.ScoredRepositoryDto;
+import com.github.scoring.model.GithubSearchResponse;
+import com.github.scoring.model.PageResponse;
+import com.github.scoring.model.ScoredModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +13,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class GithubSearchService {
+public class SearchService {
 
     private final GithubApiClient githubApiClient;
     private final PopularityScoreService scoreService;
 
-    public PageResponse<ScoredRepositoryDto> searchAndScore(
+    public PageResponse<ScoredModel> searchAndScore(
             String name,
             String language,
             LocalDate createAt,
@@ -46,10 +46,10 @@ public class GithubSearchService {
         // Only sort by popularityScore if user didn't specify sort parameter
         if (sort == null || sort.isBlank()) {
             stream = stream.sorted(Comparator.comparingDouble(
-                    ScoredRepositoryDto::popularityScore).reversed());
+                    ScoredModel::popularityScore).reversed());
         }
 
-        List<ScoredRepositoryDto> scoredRepositories = stream.toList();
+        List<ScoredModel> scoredRepositories = stream.toList();
 
         // Build paginated response
         return new PageResponse<>(
