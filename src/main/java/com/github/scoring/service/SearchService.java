@@ -68,11 +68,11 @@ public class SearchService {
 
     private void validateName(String name) {
         if (name == null || name.isBlank()) {
-            throw new GithubValidationException("Validation failed or endpoint has been spammed: Query cannot be empty");
+            throw new GithubValidationException("Validation failed or endpoint has been spammed: Query param name cannot be empty");
         }
 
         if (INVALID_QUERY_PATTERN.matcher(name).find()) {
-            throw new GithubValidationException("Validation failed or endpoint has been spammed: Query contains invalid characters");
+            throw new GithubValidationException("Validation failed or endpoint has been spammed: Query param name contains invalid characters");
         }
 
         if (name.length() > 256) {
