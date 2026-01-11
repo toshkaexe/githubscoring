@@ -25,7 +25,6 @@ public class SearchService {
 
     public PageResponse<ScoredModel> searchAndScore(
             String name,
-            String language,
             LocalDate createAt,
             String sort,
             String order,
@@ -36,7 +35,6 @@ public class SearchService {
 
         GithubSearchResponse searchResponse = githubApiClient.search(
                 name,
-                language,
                 createAt,
                 sort,
                 order,

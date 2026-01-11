@@ -73,13 +73,12 @@ class RepositoryScoreControllerTest {
                 isNull(),
                 isNull(),
                 isNull(),
-                isNull(),
                 eq(1),
                 eq(30)
         )).thenReturn(mockResponse);
 
         PageResponse<ScoredModel> response = controller.scoreRepositories(
-                "tetris", null, null, null, null, 1, 30
+                "tetris", null, null, null, 1, 30
         );
 
         assertThat(response).isNotNull();
@@ -92,43 +91,17 @@ class RepositoryScoreControllerTest {
         assertThat(response.totalPages()).isEqualTo(140);
         assertThat(response.hasNext()).isTrue();
 
-        verify(searchService).searchAndScore("tetris", null, null, null, null, 1, 30);
+        verify(searchService).searchAndScore("tetris", null, null, null, 1, 30);
     }
 
     @Test
-    void testScenario2_SearchWithLanguageFilter() {
-        // Scenario 2: Search with Language Filter
-        // GET /api/repositories/score?name=tetris&language=Assembly
-        when(searchService.searchAndScore(
-                eq("tetris"),
-                eq("Assembly"),
-                isNull(),
-                isNull(),
-                isNull(),
-                eq(1),
-                eq(30)
-        )).thenReturn(mockResponse);
-
-        PageResponse<ScoredModel> response = controller.scoreRepositories(
-                "tetris", "Assembly", null, null, null, 1, 30
-        );
-
-        assertThat(response).isNotNull();
-        assertThat(response.content()).hasSize(2);
-        assertThat(response.content().getFirst().fullName()).isEqualTo("daniel-e/tetros");
-
-        verify(searchService).searchAndScore("tetris", "Assembly", null, null, null, 1, 30);
-    }
-
-    @Test
-    void testScenario3_SearchWithCreationDateFilter() {
+    void testScenario2_SearchWithCreationDateFilter() {
         // Scenario 3: Search with Creation Date Filter
         // GET /api/repositories/score?name=react&createAt=2023-01-01
         LocalDate createAt = LocalDate.parse("2023-01-01");
 
         when(searchService.searchAndScore(
                 eq("react"),
-                isNull(),
                 eq(createAt),
                 isNull(),
                 isNull(),
@@ -137,13 +110,13 @@ class RepositoryScoreControllerTest {
         )).thenReturn(mockResponse);
 
         PageResponse<ScoredModel> response = controller.scoreRepositories(
-                "react", null, createAt, null, null, 1, 30
+                "react", createAt, null, null, 1, 30
         );
 
         assertThat(response).isNotNull();
         assertThat(response.content()).hasSize(2);
 
-        verify(searchService).searchAndScore("react", null, createAt, null, null, 1, 30);
+        verify(searchService).searchAndScore("react", createAt, null, null, 1, 30);
     }
 
     @Test
@@ -153,7 +126,6 @@ class RepositoryScoreControllerTest {
         when(searchService.searchAndScore(
                 eq("kubernetes"),
                 isNull(),
-                isNull(),
                 eq("stars"),
                 eq("desc"),
                 eq(1),
@@ -161,13 +133,13 @@ class RepositoryScoreControllerTest {
         )).thenReturn(mockResponse);
 
         PageResponse<ScoredModel> response = controller.scoreRepositories(
-                "kubernetes", null, null, "stars", "desc", 1, 30
+                "kubernetes", null, "stars", "desc", 1, 30
         );
 
         assertThat(response).isNotNull();
         assertThat(response.content()).hasSize(2);
 
-        verify(searchService).searchAndScore("kubernetes", null, null, "stars", "desc", 1, 30);
+        verify(searchService).searchAndScore("kubernetes", null, "stars", "desc", 1, 30);
     }
 
     @Test
@@ -177,7 +149,6 @@ class RepositoryScoreControllerTest {
         when(searchService.searchAndScore(
                 eq("tensorflow"),
                 isNull(),
-                isNull(),
                 eq("forks"),
                 eq("desc"),
                 eq(1),
@@ -185,13 +156,13 @@ class RepositoryScoreControllerTest {
         )).thenReturn(mockResponse);
 
         PageResponse<ScoredModel> response = controller.scoreRepositories(
-                "tensorflow", null, null, "forks", "desc", 1, 30
+                "tensorflow", null, "forks", "desc", 1, 30
         );
 
         assertThat(response).isNotNull();
         assertThat(response.content()).hasSize(2);
 
-        verify(searchService).searchAndScore("tensorflow", null, null, "forks", "desc", 1, 30);
+        verify(searchService).searchAndScore("tensorflow", null, "forks", "desc", 1, 30);
     }
 
     @Test
@@ -201,7 +172,6 @@ class RepositoryScoreControllerTest {
         when(searchService.searchAndScore(
                 eq("vue"),
                 isNull(),
-                isNull(),
                 eq("updated"),
                 eq("desc"),
                 eq(1),
@@ -209,13 +179,13 @@ class RepositoryScoreControllerTest {
         )).thenReturn(mockResponse);
 
         PageResponse<ScoredModel> response = controller.scoreRepositories(
-                "vue", null, null, "updated", "desc", 1, 30
+                "vue", null, "updated", "desc", 1, 30
         );
 
         assertThat(response).isNotNull();
         assertThat(response.content()).hasSize(2);
 
-        verify(searchService).searchAndScore("vue", null, null, "updated", "desc", 1, 30);
+        verify(searchService).searchAndScore("vue", null, "updated", "desc", 1, 30);
     }
 
     @Test
@@ -242,13 +212,12 @@ class RepositoryScoreControllerTest {
                 isNull(),
                 isNull(),
                 isNull(),
-                isNull(),
                 eq(2),
                 eq(50)
         )).thenReturn(paginatedResponse);
 
         PageResponse<ScoredModel> response = controller.scoreRepositories(
-                "django", null, null, null, null, 2, 50
+                "django", null, null, null, 2, 50
         );
 
         assertThat(response).isNotNull();
@@ -258,7 +227,7 @@ class RepositoryScoreControllerTest {
         assertThat(response.totalPages()).isEqualTo(20);
         assertThat(response.hasNext()).isTrue();
 
-        verify(searchService).searchAndScore("django", null, null, null, null, 2, 50);
+        verify(searchService).searchAndScore("django", null, null, null, 2, 50);
     }
 
 
@@ -272,13 +241,12 @@ class RepositoryScoreControllerTest {
                 isNull(),
                 isNull(),
                 isNull(),
-                isNull(),
                 eq(1),
                 eq(30)
         )).thenThrow(new GithubValidationException(errorMessage));
 
         assertThatThrownBy(() -> controller.scoreRepositories(
-                "", null, null, null, null, 1, 30
+                "", null, null, null, 1, 30
         ))
                 .isInstanceOf(GithubValidationException.class)
                 .hasMessage(errorMessage);
@@ -291,7 +259,6 @@ class RepositoryScoreControllerTest {
 
         when(searchService.searchAndScore(
                 eq("vue"),
-                eq("JavaScript"),
                 isNull(),
                 eq("stars"),
                 eq("desc"),
@@ -300,12 +267,12 @@ class RepositoryScoreControllerTest {
         )).thenThrow(new GithubServiceUnavailableException(errorMessage));
 
         assertThatThrownBy(() -> controller.scoreRepositories(
-                "vue", "JavaScript", null, "stars", "desc", 1, 30
+                "vue", null, "stars", "desc", 1, 30
         ))
                 .isInstanceOf(GithubServiceUnavailableException.class)
                 .hasMessage(errorMessage);
 
-        verify(searchService).searchAndScore("vue", "JavaScript", null, "stars", "desc", 1, 30);
+        verify(searchService).searchAndScore("vue", null, "stars", "desc", 1, 30);
     }
 
     @Test
@@ -318,18 +285,17 @@ class RepositoryScoreControllerTest {
                 isNull(),
                 isNull(),
                 isNull(),
-                isNull(),
                 eq(1),
                 eq(30)
         )).thenThrow(new GithubValidationException(errorMessage));
 
         assertThatThrownBy(() -> controller.scoreRepositories(
-                "@#$%^&*", null, null, null, null, 1, 30
+                "@#$%^&*", null, null, null, 1, 30
         ))
                 .isInstanceOf(GithubValidationException.class)
                 .hasMessageContaining("Invalid search query");
 
-        verify(searchService).searchAndScore("@#$%^&*", null, null, null, null, 1, 30);
+        verify(searchService).searchAndScore("@#$%^&*", null, null, null, 1, 30);
     }
 
 }

@@ -28,7 +28,6 @@ public class RepositoryScoreController {
     @GetMapping("/score")
     public PageResponse<ScoredModel> scoreRepositories(
             @RequestParam String name,
-            @RequestParam(required = false) String language,
             @RequestParam(required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDate createAt,
@@ -42,6 +41,6 @@ public class RepositoryScoreController {
             @Max(value = 100, message = "size must not exceed 100")
             int size
     ) {
-        return searchService.searchAndScore(name, language, createAt, sort, order, page, size);
+        return searchService.searchAndScore(name, createAt, sort, order, page, size);
     }
 }

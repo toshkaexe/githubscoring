@@ -41,7 +41,6 @@ public class GithubApiClient {
     private static final String PUSHED_AT_FIELD = "pushed_at";
 
     // Search query templates
-    private static final String LANGUAGE_FILTER = " language:";
     private static final String CREATED_FILTER = " created:>=";
 
     private final WebClient webClient;
@@ -56,12 +55,8 @@ public class GithubApiClient {
                 .build();
     }
 
-    public GithubSearchResponse search(String name, String language, LocalDate createAt, String sort, String order, int page, int size) {
+    public GithubSearchResponse search(String name, LocalDate createAt, String sort, String order, int page, int size) {
         StringBuilder searchQuery = new StringBuilder(name);
-
-        if (language != null && !language.isBlank()) {
-            searchQuery.append(LANGUAGE_FILTER).append(language);
-        }
 
         if (createAt != null) {
             searchQuery.append(CREATED_FILTER).append(createAt.format(DateTimeFormatter.ISO_DATE));
