@@ -84,7 +84,6 @@ The score is based on:
 | Name | Type | Required | Default | Description |
 |----|------|----------|---------|-------------|
 | `name` | String | ✅ Yes | — | Search keyword |
-| `language` | String | ❌ No | — | Programming language filter |
 | `createdAt` | Date (yyyy-MM-dd) | ❌ No | — | Minimum repository creation date |
 | `sort` | String | ❌ No | `stars` | Sort field (`stars`, `forks`, `updated`) |
 | `order` | String | ❌ No | `desc` | Sort order (`asc`, `desc`) |
