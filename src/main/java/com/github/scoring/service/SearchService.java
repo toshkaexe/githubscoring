@@ -44,7 +44,6 @@ public class SearchService {
                 size
         );
 
-        // Score the items from this page
         var stream = searchResponse.items()
                 .stream()
                 .map(scoreService::score);
@@ -57,7 +56,6 @@ public class SearchService {
 
         List<ScoredModel> scoredRepositories = stream.toList();
 
-        // Build paginated response
         return new PageResponse<>(
                 scoredRepositories,
                 page,

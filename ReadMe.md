@@ -11,12 +11,16 @@ src/
 │   ├── java/com/github/scoring/
 │   │   ├── client/          # GitHub API client
 │   │   ├── controller/      # REST controllers
-│   │   ├── dto/            # Data Transfer Objects
-│   │   └── service/        # Business logic and scoring algorithms
+│   │   ├── exception/       # Custom exceptions
+│   │   ├── model/           # Data Transfer Objects and domain models
+│   │   ├── service/         # Business logic and scoring algorithms
+│   │   └── GithubRepositoryScoringApplication.java  # Main application class
 │   └── resources/
 │       └── application.properties
 └── test/
     └── java/com/github/scoring/
+        ├── controller/      # Controller tests
+        └── service/         # Service tests
 ```
 
 ## How to Run the Project
