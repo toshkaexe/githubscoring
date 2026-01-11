@@ -82,13 +82,13 @@ The score is based on:
 ### Query Parameters
 
 | Name | Type | Required | Default | Description |
-|----|------|----------|---------|-------------|
-| `name` | String | ✅ Yes | — | Search keyword |
-| `createdAt` | Date (yyyy-MM-dd) | ❌ No | — | Minimum repository creation date |
-| `sort` | String | ❌ No | `stars` | Sort field (`stars`, `forks`, `updated`) |
-| `order` | String | ❌ No | `desc` | Sort order (`asc`, `desc`) |
-| `page` | Integer | ❌ No | `1` | Page number |
-| `size` | Integer | ❌ No | `30` | Page size |
+|----|------|----|---------|-------------|
+| `name` | String | Yes | — | Search keyword |
+| `createdAt` | Date (yyyy-MM-dd) | No | — | Minimum repository creation date |
+| `sort` | String | No | `stars` | Sort field (`stars`, `forks`, `updated`) |
+| `order` | String | No | `desc` | Sort order (`asc`, `desc`) |
+| `page` | Integer | No | `1` | Page number |
+| `size` | Integer | No | `30` | Page size |
 
 #### 1.  Example Request 
 ```
@@ -105,10 +105,10 @@ GET http://localhost:8080/api/repositories/score?name=tetris
 
 **URL:**
 ```
-http://localhost:8080/api/repositories/score?name=react&createAt=2023-01-01
+http://localhost:8080/api/repositories/score?name=react&createAt=2024-01-01
 ```
 
-**Description:** Searches for React repositories created after January 1, 2023.
+**Description:** Searches for React repositories created after January 1, 2024.
 
 #### 4. Search with Star Sorting
 
@@ -149,6 +149,35 @@ http://localhost:8080/api/repositories/score?name=tetris&page=2&size=50
 **URL:**
 ```
 http://localhost:8080/api/repositories/score?name=tetris&createAt=2015-01-01&sort=stars&order=desc&page=1&size=30
+```
+Example Respose:
+```
+{
+"content": [
+{
+"fullName": "chvin/react-tetris",
+"stars": 8663,
+"forks": 2266,
+"lastPush": "2024-08-04T17:01:05Z",
+"recencyScore": 0.05441523489498909,
+"popularityScore": 6.86221273647167
+},
+{
+"fullName": "taylorconor/tinytetris",
+"stars": 3217,
+"forks": 641,
+"lastPush": "2024-07-09T06:30:54Z",
+"recencyScore": 0.04683562671316026,
+"popularityScore": 5.987001280225785
+}, ...
+  
+],
+  "page": 1,
+  "size": 30,
+  "totalElements": 92950,
+  "totalPages": 3099,
+  "hasNext": true
+}
 ```
 ## HTTP Response Status Codes
 
