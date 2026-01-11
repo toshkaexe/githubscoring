@@ -101,7 +101,7 @@ GET http://localhost:8080/api/repositories/score?name=tetris&createAt=2024-01-01
 GET http://localhost:8080/api/repositories/score?name=tetris
 ```
 
-#### 4. Search with Creation Date Filter
+#### 3. Search with Creation Date Filter
 
 **URL:**
 ```
@@ -110,21 +110,21 @@ http://localhost:8080/api/repositories/score?name=react&createAt=2023-01-01
 
 **Description:** Searches for React repositories created after January 1, 2023.
 
-#### 5. Search with Star Sorting
+#### 4. Search with Star Sorting
 
 **URL:**
 ```
 http://localhost:8080/api/repositories/score?name=tetris&sort=stars&order=desc
 ```
 
-#### 6. Search with Forks Sorting
+#### 5. Search with Forks Sorting
 
 **URL:**
 ```
 http://localhost:8080/api/repositories/score?name=tensorflow&sort=forks&order=desc
 ```
 
-#### 7. Search with Update Date Sorting
+#### 6. Search with Update Date Sorting
 
 **URL:**
 ```
@@ -133,7 +133,7 @@ http://localhost:8080/api/repositories/score?name=tetris&sort=updated&order=desc
 
 **Description:** Searches for tetris repositories sorted by last update date. The `updated` sort parameter orders results by the most recently updated repositories first (when using `order=desc`), helping you find actively maintained projects.
 
-#### 8. Search with Pagination
+#### 7. Search with Pagination
 
 **URL:**
 ```
